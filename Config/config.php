@@ -4,7 +4,7 @@ return [
     'name'        => 'Unosend SMS',
     'description' => 'SMS transport for Unosend API (unosend.co)',
     'version'     => '1.0.0',
-    'author'      => 'Hollandworx',
+    'author'      => 'Radata',
 
     'services' => [
         'integrations' => [

@@ -17,13 +17,52 @@ Mautic SMS transport plugin for sending SMS messages via the [Unosend](https://w
 
 ## Installation
 
+### Via Composer (Docker)
+
+Ensure the composer directories exist with correct permissions:
+
+```bash
+docker exec --user root mautic_web mkdir -p /var/www/.composer/cache
+docker exec --user root mautic_web chown -R www-data:www-data /var/www/.composer
+docker exec --user root mautic_web mkdir -p /var/www/.npm
+docker exec --user root mautic_web chown -R www-data:www-data /var/www/.npm
+
+```
+
+Add the GitHub repository to your Mautic project's `composer.json`:
+
+```bash
+docker exec --user www-data --workdir /var/www/html mautic_web \
+  composer config repositories.radata/mautic-unosend-sms vcs \
+  https://github.com/radata/mautic-unosend-sms --no-interaction
+```
+
+Install the plugin:
+
+```bash
+docker exec --user www-data --workdir /var/www/html mautic_web \
+  composer require radata/mautic-unosend-sms:dev-main -W --no-interaction
+```
+
+Update to the latest version:
+
+```bash
+docker exec --user www-data --workdir /var/www/html mautic_web \
+  composer update radata/mautic-unosend-sms -W --no-interaction
+```
+
+### Manual Installation
+
 1. Copy or symlink this plugin to `plugins/UnosendSmsBundle/` in your Mautic installation.
 2. Clear the Mautic cache:
    ```bash
    bin/console cache:clear
    ```
-3. Navigate to **Settings > Plugins** and click **Install/Upgrade Plugins**.
-4. Find **Unosend SMS** and click **Configure**.
+
+### Post-Installation
+
+1. Navigate to **Settings > Plugins** and click **Install/Upgrade Plugins**.
+2. Find **Unosend SMS** and click **Configure**.
 
 ## Configuration
 
