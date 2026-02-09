@@ -6,6 +6,15 @@ return [
     'version'     => '1.0.0',
     'author'      => 'Radata',
 
+    'routes' => [
+        'main' => [
+            'mautic_plugin_unosendsms_action' => [
+                'path'       => '/unosendsms/{objectAction}/{objectId}',
+                'controller' => 'MauticPlugin\UnosendSmsBundle\Controller\SmsController::executeAction',
+            ],
+        ],
+    ],
+
     'services' => [
         'integrations' => [
             'mautic.integration.unosendsms' => [
@@ -28,6 +37,21 @@ return [
                     'mautic.lead.model.dnc',
                     'mautic.lead.field.fields_with_unique_identifier',
                 ],
+            ],
+        ],
+        'events' => [
+            'mautic.unosendsms.subscriber.buttons' => [
+                'class'     => \MauticPlugin\UnosendSmsBundle\EventListener\ButtonSubscriber::class,
+                'arguments' => [
+                    'mautic.helper.integration',
+                    'translator',
+                    'router',
+                ],
+            ],
+        ],
+        'forms' => [
+            'mautic.form.type.unosend_send_sms' => [
+                'class' => \MauticPlugin\UnosendSmsBundle\Form\Type\SendSmsType::class,
             ],
         ],
         'others' => [
